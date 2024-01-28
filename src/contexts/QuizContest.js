@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
+import { questions as data } from '../data';
+
 const SECS_PER_QUESTION = 30;
 const initialState = {
 	questions: [],
@@ -95,6 +97,9 @@ function QuizProvider({ children }) {
 	);
 
 	useEffect(function () {
+		// if you are using this app with json server use a. other wise use b.
+		// a.
+		/*
 		fetch('http://localhost:7000/questions')
 			.then((res) => res.json())
 			.then((data) => dispatch({ type: 'dataReceived', payload: data }))
@@ -102,6 +107,13 @@ function QuizProvider({ children }) {
 				console.error(err);
 				dispatch({ type: 'dataFailed' });
 			});
+		*/
+
+		// b.
+		if (!data) dispatch({ type: 'dataFailed' });
+		console.log(data);
+
+		dispatch({ type: 'dataReceived', payload: data });
 	}, []);
 	return (
 		<QuizContext.Provider
@@ -126,7 +138,7 @@ function QuizProvider({ children }) {
 function useQuiz() {
 	const context = useContext(QuizContext);
 	if (context === undefined)
-		throw new Error('context was used outsidet the Provider.');
+		throw new Error('context was used outside the Provider.');
 
 	return context;
 }
