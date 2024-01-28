@@ -111,7 +111,7 @@ function QuizProvider({ children }) {
 
 		// b.
 		if (!data) dispatch({ type: 'dataFailed' });
-		console.log(data);
+		// console.log(data);
 
 		dispatch({ type: 'dataReceived', payload: data });
 	}, []);
